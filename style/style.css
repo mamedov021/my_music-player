@@ -1,0 +1,24 @@
+.my_musicPlayer {
+  display: flex;
+}
+.my_musicPlayer .left_box {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.my_musicPlayer .left_box .function {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.my_musicPlayer .left_box .function .stock {
+  display: flex;
+}
+.my_musicPlayer .left_box .function .sound {
+  display: flex;
+}
+.my_musicPlayer .right_box {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}/*# sourceMappingURL=style.css.map */

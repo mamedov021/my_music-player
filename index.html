@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/style/style.css" />
+  </head>
+  <body>
+    <div class="my_musicPlayer">
+      <div class="left_box">
+        <div class="profile">
+          <img src="" alt="" />
+        </div>
+        <div class="info">
+          <h3 id="music_name"></h3>
+          <p id="singer"></p>
+        </div>
+        
+        <div class="function">
+          <div class="stock">
+            <div class="start_music">00:00</div>
+            <input type="range" id="stock" value="0" />
+            <div class="cur_music">00:00</div>
+          </div>
+          <div class="sound">
+            <div class="min_sound"><i class="fa fa-volume-down"></i></div>
+            <input type="range" min="0" max="10" value="5" />
+            <div class="max_sound"><i class="fa fa-volume-up"></i></div>
+          </div>
+          
+          <audio src="/music/far_away.mp3" id="player_music" autoplay></audio>
+
+          <div class="controls">
+            <button
+              class="fas fa-random fa-2x random-button"
+              id="random_btn"
+            ></button>
+            <button
+              class="fa-solid fa-backward change-click"
+              id="prev_btn"
+            ></button>
+            <button
+              class="button-play fa-solid fa-play"
+              id="play_btn"
+            ></button>
+            <button
+              class="fa-solid fa-forward change-click"
+              id="next_btn"
+            ></button>
+            <button
+              class="repeat-button fa fa-repeat fa-2x"
+              id="repeat_btn"
+            ></button>
+          </div>
+        </div>
+      </div>
+      <div class="right_box">
+        <div class="list_music" id="my_list">
+          <ul id="ul"></ul>
+        </div>
+      </div>
+    </div>
+<script src="/main.js"></script>  
+</body>
+</html>
