@@ -37,15 +37,15 @@ play_btn.addEventListener("click", function() {
   
 let musicList =[
 {
-    id:0, 
+      
     name:"For away" ,
     artist: "NickelBack",
-    song: "music/for_away.mp3",
+    song: 'music/far_away.mp3',
     img:"/image/1.jpg"
      
 },
 {
-    id:1, 
+     
     name:"  " ,
     artist: "NickelBack",
     song: "music/EvgenyGrinko-Valse.mp3",
@@ -54,17 +54,30 @@ let musicList =[
 }
 ];
 
-let track_index = 0;
+    
+    let track_index = 1;
     let isPlaying = false;
-    let updateTimer;
+     let updateTimer;
+ 
+let curr_track = document.createElement('audio');
+function loadTrack(track_index){
+    clearInterval(updateTimer);
+      
+    player_music.src=musicList[track_index].song;
+    player_music.load();
 
-    let cur_track=document.createElement(".audio");
+    updateTimer = setInterval(setUpdate, 1000);
 
-function loadTrack(track_index) {
-    clearInterval(updateT)
+    player_music.addEventListener('ended', next_btn);
+  
 }
 
+loadTrack(track_index);
 
+
+function setUpdate() {
+    progress.value = player_music.currentTime;
+}
 
    
  
