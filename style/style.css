@@ -1,24 +1,55 @@
 .my_musicPlayer {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 95vh;
 }
 .my_musicPlayer .left_box {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  align-items: center;
+  width: 100%;
+}
+.my_musicPlayer .left_box .profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+.my_musicPlayer .left_box .info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.my_musicPlayer .left_box .info h3 {
+  font-size: 32px;
+  margin-bottom: 0;
+}
+.my_musicPlayer .left_box .info p {
+  font-size: 25px;
+  font-weight: 600;
 }
 .my_musicPlayer .left_box .function {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.my_musicPlayer .left_box .function .stock {
+.my_musicPlayer .left_box .stock {
   display: flex;
 }
-.my_musicPlayer .left_box .function .sound {
+.my_musicPlayer .left_box .sound {
   display: flex;
 }
-.my_musicPlayer .right_box {
+.my_musicPlayer .left_box .controls {
+  margin-top: 25px;
   display: flex;
-  flex-direction: column;
-  width: 50%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.my_musicPlayer .left_box .controls button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }/*# sourceMappingURL=style.css.map */

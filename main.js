@@ -8,11 +8,14 @@ let next_btn = document.getElementById("next_btn");
 let prev_btn = document.getElementById("prev_btn");
 
  
-let  player_music =document.getElementById("player_music")
+let  playing_music =document.getElementById("playing_music")
 
 let cur_music = document.querySelectorAll(".cur_music");
 let total_music = document.querySelectorAll(".total_music");
 let stock = document.getElementById("stock");
+
+let sound=document.getElementById("volume");
+
 
 
 let musicList =[
@@ -42,48 +45,84 @@ let musicList =[
 ];
 
 
-if(player_music.play()){
-    setInterval(()=>{
-        stock.value = player_music.currentTime;
-    },500)
-}
 
-let track_index = 1;
-let isPlaying = true;
+let track_index = 0;
+let isPlaying = false;
 let updateTimer;
-
+ 
+sound.addEventListener("change", function(){
+    playing_music.volume = sound.value / 100; 
+   }) 
+   
 function loadTrack(track_index){
     clearInterval(updateTimer); 
     
-    player_music.src=musicList[track_index].song;
-    player_music.load();
+    playing_music.src=musicList[track_index].song;
+    playing_music.load();
     
     profile_img.src=musicList[track_index].img;
     singer.textContent = musicList[track_index].singer;
     music_name.textContent=musicList[track_index].name;
     
-    
-    updateTimer = setInterval(setUpdate, 500); 
-    player_music.addEventListener('ended', next_btn);
+    seekUpdate();
+    updateTimer = setInterval(seekUpdate,1000);
+   // updateTimer = setInterval(setUpdate, 1000); 
+    playing_music.addEventListener('ended', next_btn);
+    random_bg_color()
     
 }
+ 
+ 
+function seekTo() {
+    var newPosition = playing_music.duration * (stock.value / 100);
+    playing_music.currentTime = newPosition;
+}
+
+
+ 
+function seekUpdate() {
+    if (!isNaN(playing_music.duration)) {
+        let stockPosition = (playing_music.currentTime / playing_music.duration) * 100;
+        stock.value = stockPosition;
+        
+        let currentMinutes = Math.floor(playing_music.currentTime / 60);
+        let currentSeconds = Math.floor(playing_music.currentTime % 60);
+        let durationMinutes = Math.floor(playing_music.duration / 60);
+        let durationSeconds = Math.floor(playing_music.duration % 60);
+     
+
+        if (currentSeconds < 10) {
+            currentSeconds = "0" + currentSeconds;
+        }
+        if (durationSeconds < 10) {
+            durationSeconds = "0" + durationSeconds;
+        }
+        if (currentMinutes < 10) {
+            currentMinutes = "0" + currentMinutes;
+        }
+        if (durationMinutes < 10) {
+            durationMinutes = "0" + durationMinutes;
+        }
+
+        // console.log(currentMinutes);
+        // console.log(currentSeconds);
+
+        cur_music[0].textContent = currentMinutes + ":" + currentSeconds;
+        total_music[0].textContent = durationMinutes + ":" + durationSeconds;
+    }
+}
+
+
 
 loadTrack(track_index);
 function resetValue(){
     cur_music.textContent="00:00"
     total_music.textContent="00:00"
     stock.value=0;
-}
-
-function setUpdate() {
-    stock.value = player_music.currentTime;
-}
-
-
-
-player_music.onloadedmetadata = function() {
-    stock.max=player_music.duration;
-    stock.value=player_music.currentTime;
+} 
+playing_music.onloadedmetadata = function() {
+    stock.max=playing_music.duration;
+    stock.value=playing_music.currentTime;
 }
 
 play_btn.addEventListener("click", function() {
@@ -91,14 +130,14 @@ play_btn.addEventListener("click", function() {
      
       play_btn.classList.remove("fa-pause");
       play_btn.classList.add("fa-play");
-       player_music.pause();
+       playing_music.pause();
       
    }
    else{
       
       play_btn.classList.remove("fa-play");
       play_btn.classList.add("fa-pause");
-      player_music.play();
+      playing_music.play();
       
 }
  })
@@ -111,7 +150,7 @@ play_btn.addEventListener("click", function() {
     else{
         track_index= musicList.length - 1;
     }
-    player_music.pause();
+    playing_music.pause();
 
 loadTrack(track_index);
      
@@ -124,10 +163,22 @@ next_btn.addEventListener("click", function() {
     else{
         track_index++;
     }
-    loadTrack(track_index);
-        
+    loadTrack(track_index); 
 })
+ 
 
-function  Stock(){
-    stock = cu
-}
+ 
+
+
+
+function random_bg_color() {
+     
+    let red = Math.floor(Math.random() * 256) + 64;
+    let green = Math.floor(Math.random() * 256) + 64;
+    let blue = Math.floor(Math.random() * 256) + 64;
+    
+    let bgColor = "rgb(" + red + ", " + green + ", " + blue + ")";
+    
+    document.body.style.background = bgColor;
+  }
+

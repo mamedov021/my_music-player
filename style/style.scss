@@ -1,31 +1,69 @@
  
 .my_musicPlayer {
     display: flex;   
+    align-items: center;
+    justify-content:center;
+    height: 95vh;
     .left_box {
       display: flex;
       flex-direction: column;
-      width: 50%; 
+      align-items: center;
+      width: 100%; 
+      
+      .profile {
 
+        img{
+         width: 200px;
+         height: 200px;
+         border-radius: 50%;
+       }
+      }
+      .info{
+        display:flex;
+        justify-content:center;
+        flex-direction: column;
+        align-items: center;
+        h3{
+          font-size:32px;
+          margin-bottom: 0;
+        }
+        p{
+          font-size:25px;
+          font-weight:600;
+        }
 
-    
+      }
+      
       .function {
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        
+        }
         .stock{
          display: flex;
         } 
         .sound{
           display: flex;
         }
+        .controls{
+          margin-top: 25px;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+             button{
+             width: 50px;
+             height: 50px;
+             border-radius: 50%;
+            }
+
       }
+      
     }
     
-    .right_box {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-
-    }
+    
   }
   

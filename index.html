@@ -26,17 +26,20 @@
         
         <div class="function">
           <div class="stock">
+            
             <div class="cur_music">00:00</div>
-            <input type="range" id="stock" value="0" />
+            
+            <input type="range" id="stock" min="0" max="100"  onchange="seekTo()" />
+
             <div class="total_music">00:00</div>
           </div>
           <div class="sound">
             <div class="min_sound"><i class="fa fa-volume-down"></i></div>
-            <input type="range" min="0" max="10" value="5" />
+            <input type="range" id="volume" min="0" max="100"   />
             <div class="max_sound"><i class="fa fa-volume-up"></i></div>
           </div>
           
-          <audio src="" id="player_music" autoplay></audio>
+          <audio src="" id="playing_music"></audio>
                    
           <div class="controls">
             <button
