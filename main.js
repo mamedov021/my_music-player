@@ -74,14 +74,14 @@ function loadTrack(track_index){
  
  
 function seekTo() {
-    var newPosition = playing_music.duration * (stock.value / 100);
-    playing_music.currentTime = newPosition;
+     playing_music.currentTime  = playing_music.duration * (stock.value / 60);
+    
 }
 
 
  
 function seekUpdate() {
-    if (!isNaN(playing_music.duration)) {
+    if (Number(playing_music.duration)) {
         let stockPosition = (playing_music.currentTime / playing_music.duration) * 100;
         stock.value = stockPosition;
         
@@ -173,12 +173,12 @@ next_btn.addEventListener("click", function() {
 
 function random_bg_color() {
      
-    let red = Math.floor(Math.random() * 256) + 64;
+   /* let red = Math.floor(Math.random() * 256) + 64;
     let green = Math.floor(Math.random() * 256) + 64;
     let blue = Math.floor(Math.random() * 256) + 64;
     
-    let bgColor = "rgb(" + red + ", " + green + ", " + blue + ")";
-    
-    document.body.style.background = bgColor;
-  }
+    let bgColor = "rgb(" + red + ", " + green + ", " + blue + ")";*/
+   document.body.style.backgroundImage = 'url(' + musicList[track_index].img + ')';
 
+ 
+}
