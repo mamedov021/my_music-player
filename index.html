@@ -16,54 +16,66 @@
   <body>
     <div class="my_musicPlayer">
       <div class="left_box">
-        <div class="profile" >
-          <img id="profile_img" src=" " alt="" />
-        </div>
-        <div class="info">
-          <h3 id="music_name"></h3>
-          <p id="singer"></p>
-        </div>
-        
-        <div class="function">
-          <div class="stock">
+        <div class="box">
+          <div class="animation" >
             
-            <div class="cur_music">00:00</div>
-            
-            <input type="range" id="stock" min="0" max="100"  onchange="seekTo()" />
-
-            <div class="total_music">00:00</div>
+            <div class="loader">
+              <span class="stroke"></span>
+              <span class="stroke"></span>
+              <span class="stroke"></span>
+              <span class="stroke"></span>
+              <span class="stroke"></span>
+              <span class="stroke"></span>
+              <span class="stroke"></span>
+            </div>
           </div>
-          <div class="sound">
-            <div class="min_sound"><i class="fa fa-volume-down"></i></div>
-            <input type="range" id="volume" min="0" max="100"   />
-            <div class="max_sound"><i class="fa fa-volume-up"></i></div>
+          <div class="info">
+            <h3 id="music_name"></h3>
+            <p id="singer"></p>
           </div>
           
-          <audio src="" id="playing_music"></audio>
-                   
-          <div class="controls">
-            <button
-              class="fas fa-random fa-2x random-button"
-              id="random_btn"
-            ></button>
-            <button
-              class="fa-solid fa-backward change-click"
-              id="prev_btn"
-            ></button>
-            <button
-              class="button-play fa-solid fa-play"
-              id="play_btn"
-            ></button>
-            <button
-              class="fa-solid fa-forward change-click"
-              id="next_btn"
-            ></button>
-            <button
-              class="repeat-button fa fa-repeat fa-2x"
-              id="repeat_btn"
-            ></button>
-          </div>
+          <div class="function">
+            <div class="stock">
+              
+              <div class="cur_music">00:00</div>
+              
+              <input type="range" id="stock" min="0" max="206"  value="0" onchange=" Update_stock() " />
+
+              <div class="total_music">00:00</div>
+            </div>
+            <div class="sound">
+              <div class="min_sound"><i class="fa fa-volume-down"></i></div>
+              <input type="range" id="volume" min="0" max="100" value="50"   />
+              <div class="max_sound"><i class="fa fa-volume-up"></i></div>
+            </div>
+            
+            <audio src="" id="playing_music" ></audio>
+                    
+            <div class="controls">
+              <button
+                class="fas fa-random fa-2x random-button"
+                id="random_btn"
+              ></button>
+              <button
+                class="fa-solid fa-backward change-click"
+                id="prev_btn"
+              ></button>
+              <button
+                class="button-play fa-solid fa-play"
+                id="play_btn"
+              ></button>
+              <button
+                class="fa-solid fa-forward change-click"
+                id="next_btn"
+              ></button>
+              <button
+                class="repeat-button fa fa-repeat fa-2x"
+                id="repeat_btn"
+              ></button>
+            </div>
+          </div> 
         </div>
+        
       </div>
       <div class="right_box">
         <div class="list_music" id="my_list">
