@@ -47,6 +47,34 @@ let musicList = [
     song: "music/far_away.mp3",
     img: "/image/4.jpg",
   },
+  {
+    id: 4,
+    name: "Valse",
+    singer: "Butin  Roy ",
+    song: "music/EvgenyGrinko-Valse.mp3",
+    img: "/image/2.jpg",
+  },
+  {
+    id: 5,
+    name: "For away",
+    singer: "NickelBack",
+    song: "music/far_away.mp3",
+    img: "/image/1.jpg",
+  },
+  {
+    id: 6,
+    name: "On My Way",
+    singer: "Mophty",
+    song: "music/on_my_way.mp3",
+    img: "/image/3.jpg",
+  },
+  {
+    id: 7,
+    name: " 2",
+    singer: "Mophty",
+    song: "music/far_away.mp3",
+    img: "/image/4.jpg",
+  },
 ];
 
 let track_index = 0;
@@ -125,9 +153,8 @@ play_btn.addEventListener("click", function () {
     play_btn.classList.add("fa-play");
     playing_music.pause();
     animation.style.display = "none";
-    stopChangeColor()
-    
-} else {
+    stopChangeColor();
+  } else {
     play_btn.classList.remove("fa-play");
     play_btn.classList.add("fa-pause");
     playing_music.play();
@@ -155,9 +182,9 @@ next_btn.addEventListener("click", function () {
 });
 
 function color() {
-  let red = Math.floor(Math.random() * 256)*0.9;
+  let red = Math.floor(Math.random() * 256) * 0.9;
   let green = Math.floor(Math.random() * 256);
-  let blue = Math.floor(Math.random() * 256)*2;
+  let blue = Math.floor(Math.random() * 256) * 2;
 
   return `rgb(${red}, ${green}, ${blue})`;
 }
@@ -171,16 +198,14 @@ function startChangeColor() {
 }
 
 function stopChangeColor() {
-    clearInterval(interval);
+  clearInterval(interval);
 }
 
- 
 musicList.forEach((music) => {
   document.querySelectorAll(".ul").forEach((ul) => {
     ul.innerHTML += `
     <li class="li" data-key="${music.id}">
-    <button class="li-button-play" id="playPauseBtn" data-key="${music.id}">
-      <i class="fa-solid fa-play"></i>
+    <button class="fa-solid fa-play" id="playPauseBtn" data-key="${music.id}"> 
     </button>
       <div class="info">
         <h3 class="song" id="musicName" data-key="${music.id}">${music.name}</h3>
@@ -191,15 +216,35 @@ musicList.forEach((music) => {
     `;
   });
 });
- 
-let list_play = document.querySelector( ".right_box button")
-list_play.addEventListener("click", () =>{
-  
-  
 
+let btns = document.querySelectorAll(".right_box button");
 
-   
+btns.forEach(function (btn) {
+  btn.addEventListener("click", function (event) {
+    
+    if (btn.classList.contains("fa-solid")) {
+      const musicId = btn.getAttribute("data-key");
+      const musicItem = musicList.find((music) => music.id == musicId);
+      if (musicItem) {
+        playing_music.src = musicItem.song;
+        music_name.textContent = musicItem.name;
+        singer.textContent = musicItem.singer;
+        document.body.style.backgroundImage = `url(${musicItem.img})`;
 
-
-})
- 
+        if (btn.classList.contains("fa-pause")) {
+          btn.classList.remove("fa-pause");
+          btn.classList.add("fa-play");
+          playing_music.pause();
+          animation.style.display = "none";
+          stopChangeColor();
+        } else {
+          btn.classList.remove("fa-play");
+          btn.classList.add("fa-pause");
+          playing_music.play();
+          animation.style.display = "block";
+          startChangeColor();
+        }
+      }
+    }
+  });
+});
