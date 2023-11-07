@@ -20,28 +20,45 @@ let interval;
 
 let musicList = [
   {
+    id: 0,
     name: "Valse",
-    singer: "NickelBack",
+    singer: "Butin  Roy ",
     song: "music/EvgenyGrinko-Valse.mp3",
     img: "/image/2.jpg",
   },
   {
+    id: 1,
     name: "For away",
     singer: "NickelBack",
     song: "music/far_away.mp3",
     img: "/image/1.jpg",
   },
   {
+    id: 2,
     name: "On My Way",
     singer: "Mophty",
     song: "music/on_my_way.mp3",
     img: "/image/3.jpg",
+  },
+  {
+    id: 3,
+    name: " 2",
+    singer: "Mophty",
+    song: "music/far_away.mp3",
+    img: "/image/4.jpg",
   },
 ];
 
 let track_index = 0;
 let isPlaying = false;
 let updateTimer;
+let durationTime = 0;
+let currentTime = 0;
+let musicDuration = 0;
+let currentDuration = 0;
+let nowPlaying;
+let isRpeat = false;
+let isRandom = false;
 
 sound.addEventListener("input", function () {
   playing_music.volume = sound.value / 100;
@@ -55,7 +72,7 @@ function loadTrack(track_index) {
   updateTimer = setInterval(seekUpdate, 100);
   document.body.style.backgroundImage =
     "url(" + musicList[track_index].img + ")";
-  resetValue();
+  //resetValue();
   seekUpdate();
 }
 
@@ -138,9 +155,9 @@ next_btn.addEventListener("click", function () {
 });
 
 function color() {
-  let red = Math.floor(Math.random() * 256);
+  let red = Math.floor(Math.random() * 256)*0.9;
   let green = Math.floor(Math.random() * 256);
-  let blue = Math.floor(Math.random() * 256);
+  let blue = Math.floor(Math.random() * 256)*2;
 
   return `rgb(${red}, ${green}, ${blue})`;
 }
@@ -150,11 +167,39 @@ function startChangeColor() {
       console.log(element);
       element.style.backgroundColor = color();
     });
-  }, 1000);
+  }, 800);
 }
 
 function stopChangeColor() {
     clearInterval(interval);
 }
 
+ 
+musicList.forEach((music) => {
+  document.querySelectorAll(".ul").forEach((ul) => {
+    ul.innerHTML += `
+    <li class="li" data-key="${music.id}">
+    <button class="li-button-play" id="playPauseBtn" data-key="${music.id}">
+      <i class="fa-solid fa-play"></i>
+    </button>
+      <div class="info">
+        <h3 class="song" id="musicName" data-key="${music.id}">${music.name}</h3>
+        <p class="artist" data-key="${music.id}">${music.singer}</p>
+        <audio id="myAudio" src="${music.song}"></audio>
+      </div>
+      </li>
+    `;
+  });
+});
+ 
+let list_play = document.querySelector( ".right_box button")
+list_play.addEventListener("click", () =>{
+  
+  
 
+
+   
+
+
+})
+ 

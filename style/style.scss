@@ -15,7 +15,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 90%;
+
   .box{
     display:flex;
     flex-direction: column;
@@ -23,6 +24,7 @@ body {
     align-items: center;
     background-color: #ffffff54;
     padding:  11% 10% 10% 10%;
+    border-radius: 15px;
     
 
     .animation {
@@ -45,7 +47,7 @@ body {
           height: 100%;
           width: 10px;
           border-radius: 50px;
-          margin: 10px;
+          margin: 7px;
           animation: animate 1.2s linear infinite;
 
           &:nth-child(1) {
@@ -120,12 +122,62 @@ body {
           width: 50px;
           height: 50px;
           border-radius: 50%;
+           background-color: #fff;
+           
+          border: 2px solid #08920a; 
+  
+
         }
+        button::before{
+          color:#05a908; 
+        }
+        
+       
+        
+         
       }
     }
   }
 
   }
+  .right_box{
+     width: 45%;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    background-color: #ffffff54;
+     
+    border-radius: 15px;
+    
+    .music_list{
+      width: 90%;
+      ul {
+       
+      li{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 20px;
+        button{
+          width:45px;
+          height: 45px;
+          border-radius: 50%
+        }
+        .info {
+          display: flex;
+          width: 250px;
+          justify-content: space-between;
+
+          gap:10px
+        }
+      }
+
+      }
+    }
+  }
+
 }
 
 
