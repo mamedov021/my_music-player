@@ -7,7 +7,7 @@ body {
 .my_musicPlayer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   height: 95vh;
   
 
@@ -15,14 +15,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%;
+    justify-content:center;
+    width: 500px;
+    height: 700px;
 
   .box{
+    width: 90%;
     display:flex;
     flex-direction: column;
     justify-content:center;
     align-items: center;
-    background-color: #ffffff54;
+    background-color: #ffffff75;
     padding:  11% 10% 10% 10%;
     border-radius: 15px;
     
@@ -141,12 +144,12 @@ body {
 
   }
   .right_box{
-     width: 45%;
+     width: 500px;
     display:flex;
     flex-direction: column;
     justify-content:center;
     align-items: center;
-    background-color: #ffffff54;
+    background-color: #ffffff75;
      
     border-radius: 15px;
     

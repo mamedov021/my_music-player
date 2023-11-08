@@ -42,41 +42,41 @@ let musicList = [
   },
   {
     id: 3,
-    name: " 2",
-    singer: "Mophty",
-    song: "music/far_away.mp3",
-    img: "/image/4.jpg",
+    name: " Tuesday",
+    singer: " Burak Yeter ",
+    song: "music/Burak Yeter  Tuesday.mp3",
+    img: "/image/6.jpg",
   },
   {
     id: 4,
-    name: "Valse",
-    singer: "Butin  Roy ",
-    song: "music/EvgenyGrinko-Valse.mp3",
-    img: "/image/2.jpg",
+    name: "Are You With Me Lyrics ",
+    singer: "Lost Frequencies ",
+    song: "music/Are You With Me.mp3",
+    img: "/image/4.jpg",
   },
   {
     id: 5,
-    name: "For away",
-    singer: "NickelBack",
-    song: "music/far_away.mp3",
-    img: "/image/1.jpg",
+    name: "Without Me",
+    singer: "Eminem ",
+    song: "music/Eminem  Without Me .mp3",
+    img: "/image/5.jpg",
   },
   {
     id: 6,
-    name: "On My Way",
-    singer: "Mophty",
-    song: "music/on_my_way.mp3",
-    img: "/image/3.jpg",
+    name: "Bad Boy",
+    singer: "Marwa Loud",
+    song: "music/Bad Boy  Marwa Loud.mp3",
+    img: "/image/bad.jpg",
   },
   {
     id: 7,
-    name: " 2",
-    singer: "Mophty",
-    song: "music/far_away.mp3",
-    img: "/image/4.jpg",
+    name: "  Move On ft Jabbar",
+    singer: " Deeperise",
+    song: "music/Deeperise  Move On ft Jabbar.mp3",
+    img: "/image/8.jpg",
   },
 ];
-
+ 
 let track_index = 0;
 let isPlaying = false;
 let updateTimer;
@@ -100,8 +100,10 @@ function loadTrack(track_index) {
   updateTimer = setInterval(seekUpdate, 100);
   document.body.style.backgroundImage =
     "url(" + musicList[track_index].img + ")";
-  //resetValue();
+  resetValue();
   seekUpdate();
+  Update_stock();
+  
 }
 
 function Update_stock() {
@@ -141,27 +143,43 @@ function resetValue() {
   cur_music.textContent = "00:00";
   total_music.textContent = "00:00";
   stock.value = 0;
+ 
+ 
 }
 playing_music.onloadedmetadata = function () {
   stock.max = playing_music.duration;
   stock.value = playing_music.currentTime;
 };
-
-play_btn.addEventListener("click", function () {
-  if (play_btn.classList.contains("fa-pause")) {
+ let pausedTime = 0;
+function my_pause() {
     play_btn.classList.remove("fa-pause");
     play_btn.classList.add("fa-play");
     playing_music.pause();
+    pausedTime = playing_music.currentTime; 
     animation.style.display = "none";
     stopChangeColor();
-  } else {
-    play_btn.classList.remove("fa-play");
+    
+}
+function my_play(){
+  play_btn.classList.remove("fa-play");
     play_btn.classList.add("fa-pause");
     playing_music.play();
     animation.style.display = "block";
     startChangeColor();
+    currentTime = pausedTime;
+}
+ play_btn.addEventListener("click", function () {
+  if (play_btn.classList.contains("fa-pause")) {
+    my_pause();
+  
+  } 
+  else {
+    my_play(); 
+    
   }
 });
+ 
+ 
 prev_btn.addEventListener("click", function () {
   if (track_index > 0) {
     track_index--;
@@ -170,7 +188,9 @@ prev_btn.addEventListener("click", function () {
   }
   playing_music.play();
   loadTrack(track_index);
-});
+}); 
+
+
 next_btn.addEventListener("click", function () {
   if (track_index == musicList.length - 1) {
     track_index = 0;
@@ -217,34 +237,37 @@ musicList.forEach((music) => {
   });
 });
 
-let btns = document.querySelectorAll(".right_box button");
 
-btns.forEach(function (btn) {
-  btn.addEventListener("click", function (event) {
-    
+let btns = document.querySelectorAll(".right_box button");
+ 
+  btns.forEach((btn) => {
+  btn.addEventListener("click", function () {
+    if (btn.classList.contains("fa-play")) {
+      btns.forEach((btn) => btn.classList.replace("fa-pause", "fa-play")); 
+      btn.classList.remove("fa-play");
+      btn.classList.add("fa-pause");
+      my_play(); 
+      playing_music.setAttribute("autoplay",true);  // actualy we need not used it
+    }else {
+      btn.classList.remove("fa-pause");
+      btn.classList.add("fa-play");
+      playing_music.removeAttribute("autoplay");
+      my_pause();
+    }
+
+     
+
+    const musicId = btn.getAttribute("data-key");
     if (btn.classList.contains("fa-solid")) {
-      const musicId = btn.getAttribute("data-key");
       const musicItem = musicList.find((music) => music.id == musicId);
       if (musicItem) {
         playing_music.src = musicItem.song;
         music_name.textContent = musicItem.name;
         singer.textContent = musicItem.singer;
-        document.body.style.backgroundImage = `url(${musicItem.img})`;
-
-        if (btn.classList.contains("fa-pause")) {
-          btn.classList.remove("fa-pause");
-          btn.classList.add("fa-play");
-          playing_music.pause();
-          animation.style.display = "none";
-          stopChangeColor();
-        } else {
-          btn.classList.remove("fa-play");
-          btn.classList.add("fa-pause");
-          playing_music.play();
-          animation.style.display = "block";
-          startChangeColor();
-        }
+        document.body.style.backgroundImage = `url(${musicItem.img})`; 
       }
     }
   });
 });
+ 
+

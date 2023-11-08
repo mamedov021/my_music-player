@@ -17,8 +17,7 @@
     <div class="my_musicPlayer">
       <div class="left_box">
         <div class="box">
-          <div class="animation" >
-            
+          <div class="animation">
             <div class="loader">
               <span class="stroke"></span>
               <span class="stroke"></span>
@@ -33,24 +32,30 @@
             <h3 id="music_name"></h3>
             <p id="singer"></p>
           </div>
-          
+
           <div class="function">
             <div class="stock">
-              
               <div class="cur_music">00:00</div>
-              
-              <input type="range" id="stock" min="0" max=""  value="100" onchange=" Update_stock() " />
+
+              <input
+                type="range"
+                id="stock"
+                min="0"
+                max=""
+                value="100"
+                onchange=" Update_stock() "
+              />
 
               <div class="total_music">00:00</div>
             </div>
             <div class="sound">
               <div class="min_sound"><i class="fa fa-volume-down"></i></div>
-              <input type="range" id="volume" min="0" max="100" value="25"   />
+              <input type="range" id="volume" min="0" max="100" value="25" />
               <div class="max_sound"><i class="fa fa-volume-up"></i></div>
             </div>
-            
-            <audio src="" id="playing_music" ></audio>
-                    
+
+            <audio src="" id="playing_music"></audio>
+
             <div class="controls">
               <button
                 class="fas fa-random fa-2x random-button"
@@ -73,20 +78,16 @@
                 id="repeat_btn"
               ></button>
             </div>
-          </div> 
+          </div>
         </div>
-        
       </div>
       <div class="right_box">
-      <div class="music_list" id="my_list">
-          <ul class="ul">
-            
-          </ul>
+        <div class="music_list" id="my_list">
+          <ul class="ul"></ul>
         </div>
-      </div> 
+      </div>
     </div>
-<script src="/main.js"></script>  
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-
-</body>
+    <script src="/main.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+  </body>
 </html>
