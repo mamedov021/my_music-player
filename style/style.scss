@@ -2,13 +2,14 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  color: #08680b;
 }
 
 .my_musicPlayer {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  height: 95vh;
+  height: 100vh;
   
 
   .left_box {
@@ -17,10 +18,11 @@ body {
     align-items: center;
     justify-content:center;
     width: 500px;
-    height: 700px;
+    height: 400px;
 
   .box{
     width: 90%;
+    height: 100%;
     display:flex;
     flex-direction: column;
     justify-content:center;
@@ -35,7 +37,7 @@ body {
       overflow: visible;
       height: 70px;
       position: absolute;
-      top: 150px;
+      top: 180px;
       .loader {
         // Define styles for your loader here
         height: 70px;
@@ -97,6 +99,7 @@ body {
       p {
         font-size: 25px;
         font-weight: 600;
+        
       }
     }
 
@@ -107,6 +110,8 @@ body {
 
       .stock {
         display: flex;
+        align-items: center;
+        margin:15px;
       }
       .sound  {
         display: flex;
@@ -119,7 +124,7 @@ body {
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        gap: 14px;
 
         button {
           width: 50px;
@@ -144,18 +149,25 @@ body {
 
   }
   .right_box{
-     width: 500px;
+     width: 400px;
+     height: 400px;
     display:flex;
     flex-direction: column;
     justify-content:center;
     align-items: center;
-    background-color: #ffffff75;
-     
+    background-color: rgba(255, 255, 255, 0.655);
+    overflow-y: scroll;
     border-radius: 15px;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
     
     .music_list{
-      width: 90%;
+      
       ul {
+       padding: 15px  0;
+       margin-top: 120px;
        
       li{
         display: flex;
@@ -163,22 +175,41 @@ body {
         justify-content: space-between;
         width: 100%;
         gap: 20px;
+
         button{
           width:45px;
           height: 45px;
-          border-radius: 50%
+          border-radius: 50%;
+          color: #08680b;
+          border: 1px  solid #08680b;
         }
         .info {
           display: flex;
           width: 250px;
-          justify-content: space-between;
+          justify-content: space-between; 
+          
+          p{
+            text-align:end;
+          };
 
-          gap:10px
+
         }
       }
 
       }
     }
+  }
+  .openList{
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    display: none;
+
+    i{
+      color: #0d4605;
+    };
+      
+    
   }
 
 }
@@ -193,3 +224,107 @@ body {
     height: 100%;
   }
 }
+// .fas.fas.fa-random:hover {
+//   background-color: #293d52; 
+//   color: #5c1e1e; 
+// }
+@media (max-width: 1024px) {
+  .my_musicPlayer .right_box{
+    display: none;
+     top: 5%;
+     .music_list ul {
+      margin-top:0;
+    }
+  }
+  .my_musicPlayer .openList{
+    display: block
+  }
+  .my_musicPlayer .left_box{
+    width: 80%;
+    height:90%;
+    
+    .info{
+      display: none;
+    }
+    .box{
+      justify-content: end;;
+    }
+
+  }
+  .my_musicPlayer .showList{
+    display: block;
+    position: absolute;
+    height:45% ;
+    width: 75%;
+    margin: 0;
+    padding: 20px;
+    top: 7%;
+    background-color: #f1f1f1;
+   
+  }
+}
+
+
+#stock,#volume {
+  -webkit-appearance: none;
+  appearance: none; 
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  height: 20px;
+  height: 6px;
+  background: #ccc;
+}
+
+#stock::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none; 
+  height: 30px;
+  width: 30px;
+  background: transparent;
+  background-image: url("/image/music.png");
+  background-size: cover;
+  border-radius: 50%;
+  transition: .2s ease-in-out;
+  transform: rotateZ(var(--thumb-rotate, 0deg));
+}
+
+/* Thumb: Firefox */
+#stock::-moz-range-thumb {
+  height: 30px;
+  width: 30px;
+  background: transparent;
+  background-image: url("/image/music.png");
+  background-size: cover;
+  border: none;
+  border-radius: 50%;
+  transform: rotateZ(var(--thumb-rotate, 0deg));
+  transition: .2s ease-in-out;
+} 
+#volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none; 
+  height: 25px;
+  width: 25px;
+  background: transparent;
+  background-image: url("/image/wave.jpg");
+  background-size: cover;
+  border-radius: 50%;
+  transition: .2s ease-in-out;
+  transform: rotateZ(var(--thumb-rotate, 0deg));
+}
+
+/* Thumb: Firefox */
+#volume::-moz-range-thumb {
+  height: 30px;
+  width: 30px;
+  background: transparent;
+  background-image: url("/image/wave.jpg");
+  background-size: cover;
+  border: none;
+  border-radius: 50%;
+  transform: rotateZ(var(--thumb-rotate, 0deg));
+  transition: .2s ease-in-out;
+}
+ 

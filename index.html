@@ -54,7 +54,11 @@
               <div class="max_sound"><i class="fa fa-volume-up"></i></div>
             </div>
 
-            <audio src="" id="playing_music"></audio>
+            <audio src="" id="playing_music" type="audio/mpeg"></audio>
+
+
+    <!-- <button class="fa-solid fa-play" id="playPauseBtn" onclick="changeMusicHandler" data-key="${music.id}">  -->
+
 
             <div class="controls">
               <button
@@ -85,6 +89,9 @@
         <div class="music_list" id="my_list">
           <ul class="ul"></ul>
         </div>
+      </div>
+      <div class="openList" >
+        <i id="bars" class="fa-solid fa-bars fa-beat fa-lg"></i>
       </div>
     </div>
     <script src="/main.js"></script>

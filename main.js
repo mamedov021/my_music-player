@@ -20,6 +20,13 @@ let interval;
 
 let musicList = [
   {
+    id: 6,
+    name: "Bad Boy",
+    singer: "Marwa Loud",
+    song: "music/Bad Boy  Marwa Loud.mp3",
+    img: "/image/bad.jpg",
+  },
+  {
     id: 0,
     name: "Valse",
     singer: "Butin  Roy ",
@@ -61,13 +68,7 @@ let musicList = [
     song: "music/Eminem  Without Me .mp3",
     img: "/image/5.jpg",
   },
-  {
-    id: 6,
-    name: "Bad Boy",
-    singer: "Marwa Loud",
-    song: "music/Bad Boy  Marwa Loud.mp3",
-    img: "/image/bad.jpg",
-  },
+
   {
     id: 7,
     name: "  Move On ft Jabbar",
@@ -76,7 +77,7 @@ let musicList = [
     img: "/image/8.jpg",
   },
 ];
- 
+
 let track_index = 0;
 let isPlaying = false;
 let updateTimer;
@@ -91,6 +92,7 @@ let isRandom = false;
 sound.addEventListener("input", function () {
   playing_music.volume = sound.value / 100;
 });
+
 function loadTrack(track_index) {
   clearInterval(updateTimer);
   playing_music.src = musicList[track_index].song;
@@ -103,11 +105,11 @@ function loadTrack(track_index) {
   resetValue();
   seekUpdate();
   Update_stock();
-  
 }
 
 function Update_stock() {
   playing_music.currentTime = stock.value;
+  stock.style.setProperty("--thumb-rotate", `${(stock.value/100) * 2160}deg`)
 }
 
 function seekUpdate() {
@@ -143,43 +145,48 @@ function resetValue() {
   cur_music.textContent = "00:00";
   total_music.textContent = "00:00";
   stock.value = 0;
- 
- 
 }
 playing_music.onloadedmetadata = function () {
   stock.max = playing_music.duration;
   stock.value = playing_music.currentTime;
 };
- let pausedTime = 0;
+let pausedTime = 0;
 function my_pause() {
-    play_btn.classList.remove("fa-pause");
-    play_btn.classList.add("fa-play");
-    playing_music.pause();
-    pausedTime = playing_music.currentTime; 
-    animation.style.display = "none";
-    stopChangeColor();
-    
+  // console.log("pause");
+
+  play_btn.classList.remove("fa-pause");
+  play_btn.classList.add("fa-play");
+  playing_music.pause();
+  playing_music.removeAttribute("autoplay");
+  pausedTime = playing_music.currentTime;
+  animation.style.display = "none";
+  stopChangeColor();
 }
-function my_play(){
+let rotationInterval;
+function my_play() {
   play_btn.classList.remove("fa-play");
-    play_btn.classList.add("fa-pause");
-    playing_music.play();
-    animation.style.display = "block";
-    startChangeColor();
-    currentTime = pausedTime;
+  play_btn.classList.add("fa-pause");
+  playing_music.play();
+   playing_music.setAttribute("autoplay", true);
+  animation.style.display = "block";
+  startChangeColor(); 
+  currentTime = pausedTime;
+ rotationInterval = setInterval(updateRotation, 100); 
+   
 }
- play_btn.addEventListener("click", function () {
+
+function updateRotation() {
+  stock.style.setProperty("--thumb-rotate", `${(stock.value/100) * 2160}deg`);
+}
+
+play_btn.addEventListener("click", function () {
   if (play_btn.classList.contains("fa-pause")) {
     my_pause();
-  
-  } 
-  else {
-    my_play(); 
-    
+  } else {
+    my_play();
   }
 });
- 
- 
+
 prev_btn.addEventListener("click", function () {
   if (track_index > 0) {
     track_index--;
@@ -188,8 +195,7 @@ prev_btn.addEventListener("click", function () {
   }
   playing_music.play();
   loadTrack(track_index);
-}); 
-
+});
 
 next_btn.addEventListener("click", function () {
   if (track_index == musicList.length - 1) {
@@ -211,13 +217,13 @@ function color() {
 function startChangeColor() {
   interval = setInterval(() => {
     stroke.forEach((element) => {
-      console.log(element);
       element.style.backgroundColor = color();
     });
   }, 800);
 }
 
 function stopChangeColor() {
+  console.log("crear interval");
   clearInterval(interval);
 }
 
@@ -238,24 +244,29 @@ musicList.forEach((music) => {
 });
 
 
+
 let btns = document.querySelectorAll(".right_box button");
+ let btn_PouseTime =0;
+btns.forEach((btn) => {
  
-  btns.forEach((btn) => {
   btn.addEventListener("click", function () {
+    
     if (btn.classList.contains("fa-play")) {
-      btns.forEach((btn) => btn.classList.replace("fa-pause", "fa-play")); 
+      console.log("cliced");
+    // stopChangeColor();
+      btns.forEach((btn) => btn.classList.replace("fa-pause", "fa-play"));
       btn.classList.remove("fa-play");
       btn.classList.add("fa-pause");
-      my_play(); 
-      playing_music.setAttribute("autoplay",true);  // actualy we need not used it
-    }else {
+      currentTime = btn_PouseTime;
+      
+      my_play();
+      
+    } else {
       btn.classList.remove("fa-pause");
       btn.classList.add("fa-play");
-      playing_music.removeAttribute("autoplay");
+      btn_PouseTime = playing_music.currentTime;
       my_pause();
     }
-
-     
 
     const musicId = btn.getAttribute("data-key");
     if (btn.classList.contains("fa-solid")) {
@@ -264,10 +275,47 @@ let btns = document.querySelectorAll(".right_box button");
         playing_music.src = musicItem.song;
         music_name.textContent = musicItem.name;
         singer.textContent = musicItem.singer;
-        document.body.style.backgroundImage = `url(${musicItem.img})`; 
+        document.body.style.backgroundImage = `url(${musicItem.img})`;
       }
     }
   });
 });
- 
 
+let random_btn = document.getElementById("random_btn");
+
+random_btn.addEventListener("click", function randomMusic() {
+  let randomIndex;
+
+  while (true) {
+    randomIndex = Math.floor(Math.random() * musicList.length);
+    if (randomIndex !== track_index) {
+      break;
+    }
+  }
+
+  loadTrack(randomIndex);
+  playing_music.play();
+  random_btn.classList.toggle("active");
+});
+
+//  if(playing_music.currentTime == playing_music.durationTime){
+//   track_index++;
+//   }
+
+let right_box = document.querySelector(".right_box");
+let bars = document.getElementById("bars");
+
+
+bars.addEventListener("click", function () {
+  right_box.classList.toggle("showList");
+  if(bars.classList.contains("fa-bars")){
+    bars.classList.remove("fa-bars");
+    bars.classList.add("fa-x");
+  }
+  else{
+    bars.classList.remove("fa-x") ;
+    bars.classList.add("fa-bars");
+   
+
+  }
+});
