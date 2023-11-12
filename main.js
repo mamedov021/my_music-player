@@ -15,17 +15,10 @@ let total_music = document.querySelectorAll(".total_music");
 let stock = document.getElementById("stock");
 
 let sound = document.getElementById("volume");
-
 let interval;
 
 let musicList = [
-  {
-    id: 6,
-    name: "Bad Boy",
-    singer: "Marwa Loud",
-    song: "music/Bad Boy  Marwa Loud.mp3",
-    img: "/image/bad.jpg",
-  },
+  
   {
     id: 0,
     name: "Valse",
@@ -68,7 +61,13 @@ let musicList = [
     song: "music/Eminem  Without Me .mp3",
     img: "/image/5.jpg",
   },
-
+  {
+    id: 6,
+    name: "Bad Boy",
+    singer: "Marwa Loud",
+    song: "music/Bad Boy  Marwa Loud.mp3",
+    img: "/image/bad.jpg",
+  },
   {
     id: 7,
     name: "  Move On ft Jabbar",
@@ -79,14 +78,14 @@ let musicList = [
 ];
 
 let track_index = 0;
-let isPlaying = false;
+let isPlaying = true;
 let updateTimer;
 let durationTime = 0;
 let currentTime = 0;
 let musicDuration = 0;
 let currentDuration = 0;
 let nowPlaying;
-let isRpeat = false;
+let isRpeat = true;
 let isRandom = false;
 
 sound.addEventListener("input", function () {
@@ -94,22 +93,25 @@ sound.addEventListener("input", function () {
 });
 
 function loadTrack(track_index) {
-  clearInterval(updateTimer);
+ 
   playing_music.src = musicList[track_index].song;
+  play_btn.dataset.id = musicList[track_index].id;
   playing_music.load();
   singer.textContent = musicList[track_index].singer;
   music_name.textContent = musicList[track_index].name;
-  updateTimer = setInterval(seekUpdate, 100);
+
+   updateTimer = setInterval(seekUpdate, 100);
   document.body.style.backgroundImage =
     "url(" + musicList[track_index].img + ")";
   resetValue();
+   clearInterval(updateTimer);
   seekUpdate();
   Update_stock();
 }
 
 function Update_stock() {
   playing_music.currentTime = stock.value;
-  stock.style.setProperty("--thumb-rotate", `${(stock.value/100) * 2160}deg`)
+  stock.style.setProperty("--thumb-rotate", `${(stock.value / 100) * 2160}deg`);
 }
 
 function seekUpdate() {
@@ -167,26 +169,34 @@ function my_play() {
   play_btn.classList.remove("fa-play");
   play_btn.classList.add("fa-pause");
   playing_music.play();
-   playing_music.setAttribute("autoplay", true);
+  playing_music.setAttribute("autoplay", true);
   animation.style.display = "block";
-  startChangeColor(); 
+  startChangeColor();
   currentTime = pausedTime;
- rotationInterval = setInterval(updateRotation, 100); 
-   
+  rotationInterval = setInterval(updateRotation, 100);
 }
 
 function updateRotation() {
-  stock.style.setProperty("--thumb-rotate", `${(stock.value/100) * 2160}deg`);
+  stock.style.setProperty("--thumb-rotate", `${(stock.value / 100) * 2160}deg`);
 }
 
 play_btn.addEventListener("click", function () {
+
   if (play_btn.classList.contains("fa-pause")) {
     my_pause();
+
+    document
+      .querySelector(`button[data-key="${track_index}"]`)
+      .classList.replace("fa-pause", "fa-play");
   } else {
     my_play();
+    document
+      .querySelector(`button[data-key="${track_index}"]`)
+      .classList.replace("fa-play", "fa-pause");
   }
+    // update_btn();
 });
-
+// let update_btn ;
 prev_btn.addEventListener("click", function () {
   if (track_index > 0) {
     track_index--;
@@ -243,32 +253,34 @@ musicList.forEach((music) => {
   });
 });
 
-
-
 let btns = document.querySelectorAll(".right_box button");
- let btn_PouseTime =0;
-btns.forEach((btn) => {
+
  
+ let id;
+btns.forEach((btn) => {
   btn.addEventListener("click", function () {
-    
     if (btn.classList.contains("fa-play")) {
       console.log("cliced");
-    // stopChangeColor();
       btns.forEach((btn) => btn.classList.replace("fa-pause", "fa-play"));
+      
+      
       btn.classList.remove("fa-play");
       btn.classList.add("fa-pause");
-      currentTime = btn_PouseTime;
-      
       my_play();
-      
     } else {
+     
       btn.classList.remove("fa-pause");
       btn.classList.add("fa-play");
-      btn_PouseTime = playing_music.currentTime;
-      my_pause();
-    }
+      // btn_PouseTime = playing_music.currentTime;
+      my_pause(); 
 
+    }
+    
+    
+  
     const musicId = btn.getAttribute("data-key");
+    track_index = musicId; 
+    id = musicId; 
     if (btn.classList.contains("fa-solid")) {
       const musicItem = musicList.find((music) => music.id == musicId);
       if (musicItem) {
@@ -278,9 +290,19 @@ btns.forEach((btn) => {
         document.body.style.backgroundImage = `url(${musicItem.img})`;
       }
     }
+    
   });
+  //  update_btn(){
+  //   if(track_index  != id){
+  //     console.log(track_index)
+  //     console.log(id)
+  //     btns.forEach((btn) => btn.classList.replace("fa-pause", "fa-play")); 
+  //   }
+
+  // }
 });
 
+ 
 let random_btn = document.getElementById("random_btn");
 
 random_btn.addEventListener("click", function randomMusic() {
@@ -302,20 +324,18 @@ random_btn.addEventListener("click", function randomMusic() {
 //   track_index++;
 //   }
 
+
+
 let right_box = document.querySelector(".right_box");
 let bars = document.getElementById("bars");
 
-
 bars.addEventListener("click", function () {
   right_box.classList.toggle("showList");
-  if(bars.classList.contains("fa-bars")){
+  if (bars.classList.contains("fa-bars")) {
     bars.classList.remove("fa-bars");
     bars.classList.add("fa-x");
-  }
-  else{
-    bars.classList.remove("fa-x") ;
+  } else {
+    bars.classList.remove("fa-x");
     bars.classList.add("fa-bars");
-   
-
   }
 });
