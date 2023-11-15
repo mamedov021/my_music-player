@@ -78,14 +78,15 @@ let musicList = [
 ];
 
 let track_index = 0;
-let isPlaying = true;
+ 
 let updateTimer;
 let durationTime = 0;
 let currentTime = 0;
 let musicDuration = 0;
 let currentDuration = 0;
 let nowPlaying;
-let isRpeat = true;
+let isRepeat = true;
+let isPlaying=true;
 let isRandom = false;
 
 sound.addEventListener("input", function () {
@@ -93,7 +94,7 @@ sound.addEventListener("input", function () {
 });
 
 function loadTrack(track_index) {
- 
+ clearInterval(updateTimer);
   playing_music.src = musicList[track_index].song;
   play_btn.dataset.id = musicList[track_index].id;
   playing_music.load();
@@ -103,15 +104,16 @@ function loadTrack(track_index) {
    updateTimer = setInterval(seekUpdate, 100);
   document.body.style.backgroundImage =
     "url(" + musicList[track_index].img + ")";
-  resetValue();
-   clearInterval(updateTimer);
-  seekUpdate();
-  Update_stock();
+    resetValue();
+   
+   // seekUpdate();
+   Update_stock();
+   
 }
 
 function Update_stock() {
   playing_music.currentTime = stock.value;
-  stock.style.setProperty("--thumb-rotate", `${(stock.value / 100) * 2160}deg`);
+  stock.style.setProperty("--thumb-rotate", `${(stock.value /500) * 2160}deg`);
 }
 
 function seekUpdate() {
@@ -181,7 +183,7 @@ function updateRotation() {
 }
 
 play_btn.addEventListener("click", function () {
-
+   update_btn1(track_index);
   if (play_btn.classList.contains("fa-pause")) {
     my_pause();
 
@@ -193,28 +195,53 @@ play_btn.addEventListener("click", function () {
     document
       .querySelector(`button[data-key="${track_index}"]`)
       .classList.replace("fa-play", "fa-pause");
-  }
-    // update_btn();
+  }  
 });
-// let update_btn ;
+ 
 prev_btn.addEventListener("click", function () {
   if (track_index > 0) {
     track_index--;
   } else {
-    track_index = musicList.length - 1;
+    track_index = musicList.length - 1; 
   }
-  playing_music.play();
-  loadTrack(track_index);
+  // playing_music.play();
+  loadTrack(track_index); 
+   update_btn1(track_index) ;
+    playing_music.currentTime=0;
+    
 });
+ 
+
 
 next_btn.addEventListener("click", function () {
+  if (isRandom) {
+    let randomIndex = Math.floor(Math.random() * musicList.length);
+
+    if (track_index === randomIndex) {
+      randomIndex = Math.floor(Math.random() * musicList.length);
+
+      loadTrack(randomIndex); 
+       track_index = randomIndex;
+    }
+    loadTrack(randomIndex);
+   // playing_music(randomIndex)
+    track_index = randomIndex;
+    // playing_music.currentTime=0;
+
+
+  }
+
+  console.log(track_index);
   if (track_index == musicList.length - 1) {
     track_index = 0;
   } else {
     track_index++;
   }
+  update_btn1(track_index); 
   loadTrack(track_index);
-  playing_music.play();
+  playing_music.currentTime=0;
+ 
+   
 });
 
 function color() {
@@ -254,27 +281,80 @@ musicList.forEach((music) => {
 });
 
 let btns = document.querySelectorAll(".right_box button");
+//let li = document.querySelector(".li");
 
  
- let id;
-btns.forEach((btn) => {
-  btn.addEventListener("click", function () {
+function update_btn1(key) { 
+  document.querySelectorAll("ul li").forEach((li)=> li.classList.remove("active"))
+  document.querySelector(`li[data-key="${key}"]`).classList.add("active")
+
+  btns.forEach((btn) =>{
+    btn.classList.replace("fa-pause","fa-play")
+    let playID = btn.getAttribute("data-key"); 
+   
+
+    if ( playID == track_index) {
+
+        console.log(playID);
+        console.log(track_index);
+        if(play_btn.classList.contains("fa-pause")){
+          btn.classList.replace("fa-play","fa-pause" )
+        }
+        
+    }
+
+  } );
+
+}
+ 
+
+ 
+let li = document.querySelector(".right_box .li");
+function active(key) {
+  
+  document.querySelectorAll("ul li").forEach((li)=> li.classList.remove("active"))
+  // btns.forEach((btn)=> )
+  document.querySelector(`li[data-key="${key}"]`).classList.add("active")
+
+  // btns.forEach((btn) => {
+  //   if (btn.classList.contains("fa-pause")) {
+  //     li.classList.add("active");
+  //   } else {
+  //     li.classList.remove("active");
+  //   }
+  // });
+} 
+ 
+
+ 
+ 
+
+ 
+
+btns.forEach( (btn) => {
+
+  
+  btn.addEventListener("click", function (e) {
     if (btn.classList.contains("fa-play")) {
-      console.log("cliced");
+      const dataKey = e.target.dataset.key
+      active(dataKey)
       btns.forEach((btn) => btn.classList.replace("fa-pause", "fa-play"));
       
       
       btn.classList.remove("fa-play");
       btn.classList.add("fa-pause");
       my_play();
+      
     } else {
-     
+      
       btn.classList.remove("fa-pause");
       btn.classList.add("fa-play");
       // btn_PouseTime = playing_music.currentTime;
+      
       my_pause(); 
 
     }
+    
     
     
   
@@ -292,40 +372,53 @@ btns.forEach((btn) => {
     }
     
   });
-  //  update_btn(){
-  //   if(track_index  != id){
-  //     console.log(track_index)
-  //     console.log(id)
-  //     btns.forEach((btn) => btn.classList.replace("fa-pause", "fa-play")); 
-  //   }
-
-  // }
+ 
 });
 
  
 let random_btn = document.getElementById("random_btn");
+let repeat_btn = document.getElementById("repeat_btn");
 
-random_btn.addEventListener("click", function randomMusic() {
-  let randomIndex;
+repeat_btn.addEventListener("click",()=>{
+  repeat_btn.classList.toggle("active");
+  playing_music.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play()
+  })
+  })
 
-  while (true) {
-    randomIndex = Math.floor(Math.random() * musicList.length);
-    if (randomIndex !== track_index) {
-      break;
-    }
-  }
-
-  loadTrack(randomIndex);
-  playing_music.play();
-  random_btn.classList.toggle("active");
-});
-
-//  if(playing_music.currentTime == playing_music.durationTime){
-//   track_index++;
+  
+  random_btn.addEventListener("click", (e) => {
+    isRandom = !isRandom;
+    isRandom 
+      ? e.target.classList.add("active")
+      : e.target.classList.remove("active");
+  });
+  
+// random_btn.addEventListener("click", function randomMusic() {
+//   let randomIndex;
+   
+ 
+//   while (true) {
+//     randomIndex = Math.floor(Math.random() * musicList.length);
+//     if (randomIndex !== track_index) {
+//       break;
+//     }
 //   }
 
+//   loadTrack(randomIndex);
+//   playing_music.play();
+//   random_btn.classList.toggle("active");
+// });
 
 
+// repeat_btn.addEventListener('click', toggleRepeat);
+// function toggleRepeat() {
+//   // isRepeat = !isRepeat;
+//   repeat_btn.classList.toggle('active');
+// }
+ 
+//responsives
 let right_box = document.querySelector(".right_box");
 let bars = document.getElementById("bars");
 

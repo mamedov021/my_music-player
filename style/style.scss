@@ -125,6 +125,12 @@ body {
         justify-content: center;
         align-items: center;
         gap: 14px;
+        .active::before{
+          color: #fff;
+        }
+        .active{
+          background-color:#05a908
+        }
 
         button {
           width: 50px;
@@ -166,15 +172,29 @@ body {
     .music_list{
       
       ul {
-       padding: 15px  0;
-       margin-top: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin-top: 200px;
+       .active {
+          background-color:#05a908;
+          color: #fff;
+        }
+       
        
       li{
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        gap: 20px;
+        margin-top: 10px;
+        padding:0 15px;
+        border-radius: 20px;
+        background-color: #c8c2c2;
+
+        
 
         button{
           width:45px;
@@ -202,7 +222,7 @@ body {
   .openList{
     position: absolute;
     top: 10%;
-    right: 10%;
+    right: 13%;
     display: none;
 
     i{
@@ -263,8 +283,7 @@ body {
    
   }
 }
-
-
+////////////////////////////////
 #stock,#volume {
   -webkit-appearance: none;
   appearance: none; 
@@ -276,6 +295,7 @@ body {
   height: 6px;
   background: #ccc;
 }
+
 
 #stock::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -327,4 +347,4 @@ body {
   transform: rotateZ(var(--thumb-rotate, 0deg));
   transition: .2s ease-in-out;
 }
- 
+  
