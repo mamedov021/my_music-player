@@ -142,6 +142,12 @@ function seekUpdate() {
     cur_music[0].textContent = currentMinutes + ":" + currentSeconds;
     total_music[0].textContent = durationMinutes + ":" + durationSeconds;
   }
+
+  if(Number(playing_music.duration) === playing_music.currentTime) {
+     next();
+    
+  }
+
 }
 
 loadTrack(track_index);
@@ -199,21 +205,19 @@ play_btn.addEventListener("click", function () {
 });
  
 prev_btn.addEventListener("click", function () {
-  if (track_index > 0) {
-    track_index--;
-  } else {
-    track_index = musicList.length - 1; 
-  }
-  // playing_music.play();
-  loadTrack(track_index); 
-   update_btn1(track_index) ;
-    playing_music.currentTime=0;
+ next();
+ if (track_index > 0) {
+  track_index--;
+} else {
+  track_index = musicList.length - 1; 
+} 
+loadTrack(track_index); 
+ update_btn1(track_index) ;
+  playing_music.currentTime=0;
     
 });
  
-
-
-next_btn.addEventListener("click", function () {
+function next(){
   if (isRandom) {
     let randomIndex = Math.floor(Math.random() * musicList.length);
 
@@ -231,6 +235,8 @@ next_btn.addEventListener("click", function () {
 
   }
 
+  
+
   console.log(track_index);
   if (track_index == musicList.length - 1) {
     track_index = 0;
@@ -241,6 +247,11 @@ next_btn.addEventListener("click", function () {
   loadTrack(track_index);
   playing_music.currentTime=0;
  
+}
+
+
+next_btn.addEventListener("click", function salam() {
+  next();
    
 });
 
@@ -280,8 +291,7 @@ musicList.forEach((music) => {
   });
 });
 
-let btns = document.querySelectorAll(".right_box button");
-//let li = document.querySelector(".li");
+let btns = document.querySelectorAll(".right_box button"); 
 
  
 function update_btn1(key) { 
@@ -312,17 +322,9 @@ function update_btn1(key) {
 let li = document.querySelector(".right_box .li");
 function active(key) {
   
-  document.querySelectorAll("ul li").forEach((li)=> li.classList.remove("active"))
-  // btns.forEach((btn)=> )
+  document.querySelectorAll("ul li").forEach((li)=> li.classList.remove("active")) 
   document.querySelector(`li[data-key="${key}"]`).classList.add("active")
-
-  // btns.forEach((btn) => {
-  //   if (btn.classList.contains("fa-pause")) {
-  //     li.classList.add("active");
-  //   } else {
-  //     li.classList.remove("active");
-  //   }
-  // });
+ 
 } 
  
 
